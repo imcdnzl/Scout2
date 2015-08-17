@@ -10,6 +10,6 @@ def setUp(self):
     process.wait()
 
 def teardown(self):
-    command = 'find -type l -delete'
+    command = 'find -maxdepth 1 -type l -delete'
     process = subprocess.Popen(command, shell=True)
     process.wait()
