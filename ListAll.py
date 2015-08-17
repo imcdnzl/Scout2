@@ -47,17 +47,9 @@ def pass_conditions(conditions, all_info, current_path, current_value):
         for p in current_path:
             target_obj = target_obj[p]
         target_obj = get_values_at(target_obj, {}, key.split('.'))
-        if type(target_obj) == list:
-            one_match = False
-            for v in target_obj:
-                if pass_condition(test, value, v):
-                    one_match = True
-            if not one_match:
-                return False
-        else:
-            res = pass_condition(test, value, target_obj)
-            if not res:
-                return False
+        res = pass_condition(test, value, target_obj)
+        if not res:
+            return False
     return True
 
 #
@@ -71,11 +63,25 @@ def pass_condition(test, a, b):
             if c in a:
                 return True
         return False
+    elif test == 'containNoneOf':
+        if not type(b) == list:
+            b = [ b ]
+        for c in b:
+            if c in a:
+                return False
+        return True
     elif test == 'equal':
         return a == b
     elif test == 'notEqual':
         return a != b
     elif test == 'empty':
+        if type(b) == list:
+            for c in b:
+                if c:
+                    return False
+            return True
+#        if type(b) == dict:
+#        TODO: do something here...
         return ((type(b) == dict and b == {}) or (type(b) == list and b == []))
     elif test == 'notEmpty':
         return not ((type(b) == dict and b == {}) or (type(b) == list and b == []))

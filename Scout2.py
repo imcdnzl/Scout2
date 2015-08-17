@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-# Import third-party packages
-import os
+# Import stock packages
 import sys
 
 # Import opinel
