@@ -1,0 +1,13 @@
+{
+    "entities": [
+        "iam.Users"
+    ],
+    "keys": [
+        "this"
+    ],
+    "conditions": [
+        ["Groups.GroupName", "containNoneOf", ["AllHeadlessUsers", "AllMisconfiguredUsers"]],
+        ["MFADevices", "empty", ""],
+        ["LoginProfile", "notEmpty", ""]
+    ]
+}
