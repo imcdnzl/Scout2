@@ -34,7 +34,7 @@ class TestListAllClass:
             process.wait()
             lines = []
             for line in process.stdout:
-                lines.append(line.strip())
+                lines.append(str(line.strip()))
             if sorted(lines) != sorted(config[2]):
                 print('Error when testing %s :: %s does not match %s' % (config[1], lines, config[2]))
                 all_passed = False
