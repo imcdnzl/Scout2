@@ -45,7 +45,7 @@ def main(args):
     for service in supported_services:
         ruleset = globals()[service + '_finding_dictionary']
         filename = 'rules/findings-' + service + '.' + args.ruleset_name[0] + '.json'
-        save_blob_to_file(filename, ruleset, args.force_write, args.debug)
+        save_blob_as_json(filename, ruleset, args.force_write, args.debug)
 
 
 ########################################
@@ -54,7 +54,7 @@ def main(args):
 
 default_args = read_profile_default_args(parser.prog)
 
-add_scout2_argument(parser, default_args, 'force')
+add_common_argument(parser, default_args, 'force')
 add_scout2_argument(parser, default_args, 'ruleset-name')
 add_scout2_argument(parser, default_args, 'services')
 add_scout2_argument(parser, default_args, 'skip')
