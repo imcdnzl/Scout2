@@ -47,13 +47,7 @@ ec2_classic = 'EC2-Classic'
 # Add a shared argument to a Scout2 utility
 #
 def add_scout2_argument(parser, default_args, argument_name):
-    if argument_name == 'force':
-        parser.add_argument('--force',
-                            dest='force_write',
-                            default=False,
-                            action='store_true',
-                            help='Overwrite existing json files')
-    elif argument_name == 'ruleset-name':
+    if argument_name == 'ruleset-name':
         parser.add_argument('--ruleset-name',
                             dest='ruleset_name',
                             default='default',
@@ -317,21 +311,6 @@ def prompt_4_yes_no(question):
         else:
             printError('\'%s\' is not a valid answer. Enter \'yes\'(y) or \'no\'(n).' % choice)
 
-def prompt_4_overwrite(filename, force_write):
-    # Do not prompt if the file does not exist or force_write is set
-    if not os.path.exists(filename) or force_write:
-        return True
-    return prompt_4_yes_no('File \'{}\' already exists. Do you want to overwrite it'.format(filename))
-
-def save_blob_to_file(filename, blob, force_write, debug):
-    try:
-        if prompt_4_overwrite(filename, force_write):
-            with open(filename, 'wt') as f:
-                write_data_to_file(f, blob, force_write, debug)
-    except Exception as e:
-        printException(e)
-        pass
-
 #
 # Save AWS configuration (python dictionary) as JSON
 #
@@ -343,10 +322,6 @@ def save_config_to_file(environment_name, aws_config, force_write, debug):
     except Exception as e:
         printException(e)
         pass
-
-def write_data_to_file(f, aws_config, force_write, debug):
-    print('%s' % json.dumps(aws_config, indent = 4 if debug else None, separators=(',', ': '), sort_keys=True, cls=Scout2Encoder), file = f)
-
 
 ########################################
 # Status update functions
